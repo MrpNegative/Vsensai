@@ -1,0 +1,31 @@
+.login-sm-container{
+    width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.79);
+}
+.login-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.google-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.79);
+}
+.google-btn img{
+    width: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: white;
+}
+.google-btn p{
+    padding-left: 10px;
+    color: black;
+    margin: 0;
+    font-weight: 700;
+}
