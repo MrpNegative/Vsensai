@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
@@ -56,7 +57,7 @@ const Login = () => {
           {/* <!-- Register buttons --> */}
           <div class="text-center">
             <p>
-              Not a member? <a href="#!">Register</a>
+              Not a member? <Link to="/register">Register</Link>
             </p>
             <p>or Continue with:</p>
             <div className="google-btn">

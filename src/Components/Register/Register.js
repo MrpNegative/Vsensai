@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import '../Login/Login.css'
 
 const Register = () => {
     return (
@@ -39,7 +41,7 @@ const Register = () => {
           {/* <!-- Register buttons --> */}
           <div class="text-center">
             <p>
-              Already Registered? <a href="#!">Login</a>
+              Already Registered? <Link to="/login">Login</Link>
             </p>
             <p>or Continue with:</p>
             <div className="google-btn">

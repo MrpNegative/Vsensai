@@ -8,8 +8,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 94vh;
 }
 .google-btn{
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,4 +30,7 @@
     color: black;
     margin: 0;
     font-weight: 700;
+}
+a{
+    color: black;
 }

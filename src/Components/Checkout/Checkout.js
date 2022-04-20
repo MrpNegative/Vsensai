@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Servises = () => {
+const Chackout = () => {
     return (
         <div>
-            
+            <p>Chackout</p>
         </div>
     );
 };
 
-export default Servises;
+export default Chackout;

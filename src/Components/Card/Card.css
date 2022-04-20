@@ -1,0 +1,43 @@
+.card-container{
+    margin: 30px auto;
+    width: 310px;
+    height: 700px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    align-items: center;
+    border-radius: 20px;
+}
+.img-container{
+    width: 290px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.img-container img{
+    border-radius: 10px;
+    width: 99%;
+}
+.card-info-container{
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card-info h3{
+    font-size: 25px;
+}
+.card-disc{
+    font-size: 19px;
+    margin: 15px 0;
+}
+.ck-btn{
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: larger;
+    font-weight: 600;
+}

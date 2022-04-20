@@ -9,15 +9,15 @@ const Footer = () => {
         <div className="container d-flex flex-wrap justify-content-center align-center">
           <ul className="d-flex flex-column">
             <p>SERVICES</p>
-            <Link to="/">Become an Affiliate</Link>
-            <Link to="/">Gift Card</Link>
-            <Link to="/">FAQ</Link>
+            <Link className="text-light" to="/">Become an Affiliate</Link>
+            <Link className="text-light" to="/">Gift Card</Link>
+            <Link className="text-light" to="/">FAQ</Link>
           </ul>
           <ul className="d-flex flex-column">
             <p>SUPPORT</p>
-            <Link to="/">Contact</Link>
-            <Link to="/">Terms of Service</Link>
-            <Link to="/">Privacy Policy</Link>
+            <Link  className="text-light" to="/">Contact</Link>
+            <Link className="text-light" to="/">Terms of Service</Link>
+            <Link className="text-light" to="/">Privacy Policy</Link>
           </ul>
           <div className="f-cont-3">
             <p>&copy; 2022 <span>V-SENSAI</span>. All Rights Reserved. </p>
