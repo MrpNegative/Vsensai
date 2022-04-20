@@ -10,23 +10,23 @@ const Register = () => {
         <h2>Register</h2>
         <form>
           {/* <!-- Email input --> */}
-          <div class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control" />
-            <label class="form-label" for="form2Example1">
+          <div className="form-outline mb-4">
+            <input type="email" className="form-control" />
+            <label className="form-label" >
               Email address
             </label>
           </div>
 
           {/* <!-- Password input --> */}
-          <div class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control" />
-            <label class="form-label" for="form2Example2">
+          <div className="form-outline mb-4">
+            <input type="password" id="form2Example2" className="form-control" />
+            <label className="form-label">
               Password
             </label>
           </div>
-          <div class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control" />
-            <label class="form-label" for="form2Example2">
+          <div className="form-outline mb-4">
+            <input type="password" className="form-control" />
+            <label className="form-label">
              Confirm Password
             </label>
           </div>
@@ -34,12 +34,12 @@ const Register = () => {
 
 
           {/* <!-- Submit button --> */}
-          <button type="button" class="btn btn-primary btn-block mb-4">
+          <button type="button" className="btn btn-primary btn-block mb-4">
             Register
           </button>
 
           {/* <!-- Register buttons --> */}
-          <div class="text-center">
+          <div className="text-center">
             <p>
               Already Registered? <Link to="/login">Login</Link>
             </p>
