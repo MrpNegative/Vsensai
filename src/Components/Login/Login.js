@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  useAuthState,
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../Authantication/firebase.init";
 import "./Login.css";
 
@@ -14,50 +21,78 @@ const Login = () => {
     email: "",
     password: "",
     others: "",
+    resetPass: "",
   });
 
-  const [signInWithEmail, user, loading, hookError] =
+  const [signInWithEmail, emilPassUser, loading, hookError] =
     useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle, googleUser, loading2, googleError] =
+    useSignInWithGoogle(auth);
+  const [sendPasswordResetEmail, sending, resetError] =
+    useSendPasswordResetEmail(auth);
+  const [user] = useAuthState(auth);
 
   const handelEmailInput = (event) => {
     const emailRegex = /\S+@\S+\.\S+/;
     const validEmail = emailRegex.test(event.target.value);
-
-    if(validEmail){
-      setUserInfo({...userInfo, email: event.target.value}) 
-      setErrors({...errors, email: ""})      
-  } else {
-      setErrors({...errors, email: "Invalid email"})
-      setUserInfo({...userInfo, email: ""})
-  }
+    
+    if (validEmail) {
+      setUserInfo({ ...userInfo, email: event.target.value });
+      setErrors({ ...errors, email: "" });
+      
+    } else {
+      setErrors({ ...errors, email: "Invalid email" });
+      setUserInfo({ ...userInfo, email: "" });
+    }
   };
 
   const handelPassInput = (event) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     const validPassword = passwordRegex.test(event.target.value);
 
-    if(validPassword){
-      setUserInfo({...userInfo, password: event.target.value});
-      setErrors({...errors, password: ""});
-  } else {
-      setErrors({...errors, password: "Min: 1 Letr, 1 Num, Min 8 char"});
-      setUserInfo({...userInfo, password: ""})
-  }
-   
+    if (validPassword) {
+      setUserInfo({ ...userInfo, password: event.target.value });
+      setErrors({ ...errors, password: "" });
+    } else {
+      setErrors({ ...errors, password: "Min: 1 Letr, 1 Num, Min 8 char" });
+      setUserInfo({ ...userInfo, password: "" });
+    }
   };
 
   const handelSubmit = (event) => {
     event.preventDefault();
     signInWithEmail(userInfo.email, userInfo.password);
+    setErrors({ ...errors, others: "" });
   };
-
-  // hookError 
-  useEffect(() => {
-    if(hookError){
-      setErrors({...errors, others:hookError?.message})
+  const emptyError = () =>{
+    setErrors({...errors, resetPass: ""})
+  }
+  const resetPassword = () => {
+    sendPasswordResetEmail(userInfo.email);
+    if(resetError){
+      setErrors({...errors, resetPass: resetError?.message})
     }
-  },[hookError])
- 
+    if (sending){
+      toast("Password Reset Link send!")
+    }
+  };
+  // hookError
+  useEffect(() => {
+    const error = hookError || googleError;
+    if (error) {
+      setErrors({ ...errors, others: hookError?.message });
+    }
+  }, [hookError, googleError]);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  useEffect(() => {
+    if (user) {
+      navigate(from);
+    }
+  }, [user]);
+
   return (
     <div className="login-container">
       <div className="login-sm-container">
@@ -95,7 +130,14 @@ const Login = () => {
           <div className="row mb-4">
             <div className="col">
               {/*  Simple link */}
-              <a href="#!">Forgot password?</a>
+              <a
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                href="#!"
+                onClick={emptyError}
+              >
+                Forgot password?
+              </a>
             </div>
           </div>
 
@@ -113,7 +155,7 @@ const Login = () => {
               </Link>
             </p>
             <p>or Continue with:</p>
-            <div className="google-btn">
+            <div onClick={() => signInWithGoogle()} className="google-btn">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20190925201609%21Google_%22G%22_Logo.svg"
                 alt=""
@@ -122,6 +164,51 @@ const Login = () => {
             </div>
           </div>
         </form>
+      </div>
+      {/* <!-- Modal --> */}
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Reset Confirmation
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <h3>Send Password Reset Link</h3>
+              {errors && <span>{errors.resetPass}</span>}
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <ToastContainer />
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={resetPassword}
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

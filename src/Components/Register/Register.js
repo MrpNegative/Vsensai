@@ -137,7 +137,7 @@ useEffect(() => {
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20190925201609%21Google_%22G%22_Logo.svg"
                 alt=""
-              />{" "}
+              />
               <p>Continue With Google</p>
             </div>
           </div>
