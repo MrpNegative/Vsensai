@@ -65,6 +65,10 @@ const handelSubmit = (event) => {
   createUserWithEmailAndPassword(userInfo.email, userInfo.password);
   setErrors({...errors, others:""})
 };
+const handelGoogleSubmit = ()=>{
+  signInWithGoogle()
+  setErrors({ ...errors, others: "" });
+}
 
 // hookError 
 useEffect(() => {
@@ -137,7 +141,7 @@ useEffect(() => {
               Already Registered? <Link to="/login">Login</Link>
             </p>
             <p>or Continue with:</p>
-            <div onClick={() => signInWithGoogle()} className="google-btn">
+            <div onClick={handelGoogleSubmit} className="google-btn">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20190925201609%21Google_%22G%22_Logo.svg"
                 alt=""

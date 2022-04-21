@@ -10,6 +10,7 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../Authantication/firebase.init";
 import "./Login.css";
+import Loading from "../Loading/Loading";
 
 const Login = () => {
   // Functions
@@ -31,6 +32,10 @@ const Login = () => {
   const [sendPasswordResetEmail, sending, resetError] =
     useSendPasswordResetEmail(auth);
   const [user] = useAuthState(auth);
+
+if(sending || loading2 || loading){
+  <Loading></Loading>
+}
 
   const handelEmailInput = (event) => {
     const emailRegex = /\S+@\S+\.\S+/;
@@ -64,18 +69,34 @@ const Login = () => {
     signInWithEmail(userInfo.email, userInfo.password);
     setErrors({ ...errors, others: "" });
   };
+
+  const handelGoogleSubmit = ()=>{
+    signInWithGoogle()
+    setErrors({ ...errors, others: "" });
+  }
   const emptyError = () =>{
     setErrors({...errors, resetPass: ""})
   }
-  const resetPassword = () => {
-    sendPasswordResetEmail(userInfo.email);
+  const resetPassword = async() => {
+    const email = userInfo.email;
+    if(email){
+      await sendPasswordResetEmail(userInfo.email);
+      // toast("Password Reset Link send!")
+      return
+    }
     if(resetError){
       setErrors({...errors, resetPass: resetError?.message})
     }
     if (sending){
       toast("Password Reset Link send!")
+      setErrors({...errors, resetPass: ""})
     }
-  };
+      else{
+        toast("Enter Email!")
+      }
+    }
+    
+  // };
   // hookError
   useEffect(() => {
     const error = hookError || googleError;
@@ -155,7 +176,7 @@ const Login = () => {
               </Link>
             </p>
             <p>or Continue with:</p>
-            <div onClick={() => signInWithGoogle()} className="google-btn">
+            <div onClick={handelGoogleSubmit} className="google-btn">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20190925201609%21Google_%22G%22_Logo.svg"
                 alt=""
