@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import { auth } from "../Authantication/firebase.init";
@@ -6,52 +6,89 @@ import "./Login.css";
 
 const Login = () => {
   // Functions
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [signInWithEmail, user, loading, hookError] = useSignInWithEmailAndPassword(auth);
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    others: "",
+  });
 
+  const [signInWithEmail, user, loading, hookError] =
+    useSignInWithEmailAndPassword(auth);
 
   const handelEmailInput = (event) => {
-    setEmail(event.target.value);
-  };
+    const emailRegex = /\S+@\S+\.\S+/;
+    const validEmail = emailRegex.test(event.target.value);
 
+    if(validEmail){
+      setUserInfo({...userInfo, email: event.target.value}) 
+      setErrors({...errors, email: ""})      
+  } else {
+      setErrors({...errors, email: "Invalid email"})
+      setUserInfo({...userInfo, email: ""})
+  }
+  };
 
   const handelPassInput = (event) => {
-    setPassword(event.target.value);
-  };
-  
-  const handelSubmit= (event)=>{
-    event.preventDefault()
-    signInWithEmail(email, password)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const validPassword = passwordRegex.test(event.target.value);
+
+    if(validPassword){
+      setUserInfo({...userInfo, password: event.target.value});
+      setErrors({...errors, password: ""});
+  } else {
+      setErrors({...errors, password: "Min: 1 Letr, 1 Num, Min 8 char"});
+      setUserInfo({...userInfo, password: ""})
   }
-console.log( email, password);
+   
+  };
+
+  const handelSubmit = (event) => {
+    event.preventDefault();
+    signInWithEmail(userInfo.email, userInfo.password);
+  };
+
+  // hookError 
+  useEffect(() => {
+    if(hookError){
+      setErrors({...errors, others:hookError?.message})
+    }
+  },[hookError])
+ 
   return (
     <div className="login-container">
       <div className="login-sm-container">
-        <h2>Log In</h2>
+        <h2>Sign In</h2>
         <form onSubmit={handelSubmit}>
           {/* Email input*/}
           <div className="form-outline mb-4">
             <input
               onChange={handelEmailInput}
-              type="email"
+              type="text"
               id="form2Example1"
               className="form-control"
             />
-            <label className="form-label" >
-              Email address
-            </label>
+            <div className="d-flex justify-content-between">
+              <label className="form-label">Email address</label>{" "}
+              {errors && <span>{errors.email}</span>}
+            </div>
           </div>
 
           {/* Password input */}
           <div className="form-outline mb-4">
-            <input onChange={handelPassInput}
+            <input
+              onChange={handelPassInput}
               type="password"
               className="form-control"
             />
-            <label className="form-label" >
-              Password
-            </label>
+            <div className="d-flex justify-content-between">
+              <label className="form-label">Password</label>{" "}
+              {errors && <span>{errors.password}</span>}
+            </div>
+            {errors && <span>{errors.others}</span>}
           </div>
 
           {/* <!-- 2 column grid layout for inline styling --> */}
@@ -63,7 +100,7 @@ console.log( email, password);
           </div>
 
           {/* Submit button */}
-          <button type="submit"  className="btn btn-primary btn-block mb-4">
+          <button type="submit" className="btn btn-primary btn-block mb-4">
             Log In
           </button>
 
