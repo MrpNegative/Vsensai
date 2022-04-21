@@ -1,6 +1,7 @@
 import React from 'react';
 import Services from '../Services/Services';
 import Header from '../Header/Header';
+import Demo from '../Demo/Demo';
 
 const Home = () => {
     return (
@@ -8,6 +9,7 @@ const Home = () => {
             
             <Header></Header>
             <Services></Services>
+            <Demo></Demo>
             
         </div>
     );
