@@ -118,6 +118,7 @@ if(sending || loading2 || loading){
               type="text"
               id="form2Example1"
               className="form-control"
+              required
             />
             <div className="d-flex justify-content-between">
               <label className="form-label">Email address</label>{" "}
@@ -131,6 +132,7 @@ if(sending || loading2 || loading){
               onChange={handelPassInput}
               type="password"
               className="form-control"
+              required
             />
             <div className="d-flex justify-content-between">
               <label className="form-label">Password</label>{" "}
