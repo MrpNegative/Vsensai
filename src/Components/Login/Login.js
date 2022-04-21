@@ -54,7 +54,7 @@ const Login = () => {
       setUserInfo({ ...userInfo, password: event.target.value });
       setErrors({ ...errors, password: "" });
     } else {
-      setErrors({ ...errors, password: "Min: 1 Letr, 1 Num, Min 8 char" });
+      setErrors({ ...errors, password: "Min: 1 Letr, 1 Num, 8 char" });
       setUserInfo({ ...userInfo, password: "" });
     }
   };

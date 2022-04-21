@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
+import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithGoogle} from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from "../Authantication/firebase.init";
 import '../Login/Login.css'
@@ -19,8 +19,11 @@ const [errors, setErrors] = useState({
   others: ""
 });
 
-const [createUserWithEmailAndPassword, user, loading, hookError] =
+const [createUserWithEmailAndPassword, emailPassUser, loading, hookError] =
         useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+        const [signInWithGoogle, googleUser, loading2, googleError] =
+    useSignInWithGoogle(auth);
+    const [user] = useAuthState(auth);
 
 const handelEmailInput = (event) => {
   const emailRegex = /\S+@\S+\.\S+/;
@@ -65,10 +68,11 @@ const handelSubmit = (event) => {
 
 // hookError 
 useEffect(() => {
-  if(hookError){
-    setErrors({...errors, others:hookError?.message})
+  const error = hookError || googleError;
+  if(error){
+    setErrors({...errors, others:error?.message})
   }
-},[hookError])
+},[hookError, googleError])
 
 const navigate = useNavigate();
 const location = useLocation();
@@ -133,7 +137,7 @@ useEffect(() => {
               Already Registered? <Link to="/login">Login</Link>
             </p>
             <p>or Continue with:</p>
-            <div className="google-btn">
+            <div onClick={() => signInWithGoogle()} className="google-btn">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20190925201609%21Google_%22G%22_Logo.svg"
                 alt=""
