@@ -41,3 +41,7 @@
     font-size: larger;
     font-weight: 600;
 }
+.ck-btn:hover{
+    background-color: #35c652;
+    color: white;
+}

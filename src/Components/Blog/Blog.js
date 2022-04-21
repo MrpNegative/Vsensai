@@ -2,8 +2,10 @@ import React from 'react';
 
 const Blog = () => {
     return (
-        <div>
-            <p>Blog</p>
+        <div className='container'>
+            <h1 className='fw-bold'>Difference between authorization and authentication</h1>
+            <hr />
+            <p></p>
         </div>
     );
 };
