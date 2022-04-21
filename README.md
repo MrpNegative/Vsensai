@@ -1,6 +1,6 @@
 # V-SENSAI
 
-Live Site Link [Click Hear](https://game-analytics.netlify.app/).
+Live Site Link [Click Hear](https://vsensai0.web.app/).
 
 ## Features and Functionality
 * V-SENSAI is a heavenly site for velorant player.

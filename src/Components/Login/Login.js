@@ -107,7 +107,7 @@ if(sending || loading2 || loading){
 
   return (
     <div className="login-container">
-       <ToastContainer />
+       
       <div className="login-sm-container">
         <h2>Sign In</h2>
         <form onSubmit={handelSubmit}>
@@ -216,6 +216,7 @@ if(sending || loading2 || loading){
               >
                 Send
               </button>
+              <ToastContainer />
             </div>
           </div>
         </div>
