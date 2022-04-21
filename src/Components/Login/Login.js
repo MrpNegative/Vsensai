@@ -74,22 +74,12 @@ if(sending || loading2 || loading){
     signInWithGoogle()
     setErrors({ ...errors, others: "" });
   }
-  const emptyError = () =>{
-    setErrors({...errors, resetPass: ""})
-  }
+  
   const resetPassword = async() => {
     const email = userInfo.email;
     if(email){
       await sendPasswordResetEmail(userInfo.email);
-      // toast("Password Reset Link send!")
-      return
-    }
-    if(resetError){
-      setErrors({...errors, resetPass: resetError?.message})
-    }
-    if (sending){
       toast("Password Reset Link send!")
-      setErrors({...errors, resetPass: ""})
     }
       else{
         toast("Enter Email!")
@@ -100,8 +90,9 @@ if(sending || loading2 || loading){
   // hookError
   useEffect(() => {
     const error = hookError || googleError;
+    console.log(error)
     if (error) {
-      setErrors({ ...errors, others: hookError?.message });
+      setErrors({ ...errors, others: error?.message });
     }
   }, [hookError, googleError]);
 
@@ -116,6 +107,7 @@ if(sending || loading2 || loading){
 
   return (
     <div className="login-container">
+       <ToastContainer />
       <div className="login-sm-container">
         <h2>Sign In</h2>
         <form onSubmit={handelSubmit}>
@@ -129,7 +121,7 @@ if(sending || loading2 || loading){
             />
             <div className="d-flex justify-content-between">
               <label className="form-label">Email address</label>{" "}
-              {errors && <span>{errors.email}</span>}
+              {errors && <span>{errors?.email}</span>}
             </div>
           </div>
 
@@ -144,7 +136,6 @@ if(sending || loading2 || loading){
               <label className="form-label">Password</label>{" "}
               {errors && <span>{errors.password}</span>}
             </div>
-            {errors && <span>{errors.others}</span>}
           </div>
 
           {/* <!-- 2 column grid layout for inline styling --> */}
@@ -155,13 +146,12 @@ if(sending || loading2 || loading){
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
                 href="#!"
-                onClick={emptyError}
               >
                 Forgot password?
               </a>
             </div>
           </div>
-
+          {errors && <span>{errors.others}</span>}
           {/* Submit button */}
           <button type="submit" className="btn btn-primary btn-block mb-4">
             Log In
@@ -209,7 +199,6 @@ if(sending || loading2 || loading){
             </div>
             <div className="modal-body">
               <h3>Send Password Reset Link</h3>
-              {errors && <span>{errors.resetPass}</span>}
             </div>
             <div className="modal-footer">
               <button
@@ -219,7 +208,7 @@ if(sending || loading2 || loading){
               >
                 Close
               </button>
-              <ToastContainer />
+             
               <button
                 type="button"
                 className="btn btn-primary"

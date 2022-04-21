@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithGoogle} from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from "../Authantication/firebase.init";
+import Loading from '../Loading/Loading';
 import '../Login/Login.css'
 
   
@@ -25,6 +26,10 @@ const [createUserWithEmailAndPassword, emailPassUser, loading, hookError] =
     useSignInWithGoogle(auth);
     const [user] = useAuthState(auth);
 
+    if(loading2 || loading){
+      <Loading></Loading>
+    }
+    
 const handelEmailInput = (event) => {
   const emailRegex = /\S+@\S+\.\S+/;
   const validEmail = emailRegex.test(event.target.value);
