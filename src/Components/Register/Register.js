@@ -22,6 +22,7 @@ const Register = () => {
     others: "",
   });
 
+  // react firebase hooks
   const [createUserWithEmailAndPassword, emailPassUser, loading, hookError] =
     useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
   const [signInWithGoogle, googleUser, loading2, googleError] =
@@ -32,6 +33,7 @@ const Register = () => {
     <Loading></Loading>;
   }
 
+  //Email and password validation
   const handelEmailInput = (event) => {
     const emailRegex = /\S+@\S+\.\S+/;
     const validEmail = emailRegex.test(event.target.value);
@@ -67,6 +69,7 @@ const Register = () => {
     }
   };
 
+  //submit buttons
   const handelSubmit = (event) => {
     event.preventDefault();
     createUserWithEmailAndPassword(userInfo.email, userInfo.password);
@@ -85,6 +88,7 @@ const Register = () => {
     }
   }, [hookError, googleError]);
 
+  // page Navigaions
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";

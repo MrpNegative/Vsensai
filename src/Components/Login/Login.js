@@ -25,18 +25,21 @@ const Login = () => {
     resetPass: "",
   });
 
+  // react firbase hooks
   const [signInWithEmail, emilPassUser, loading, hookError] =
     useSignInWithEmailAndPassword(auth);
   const [signInWithGoogle, googleUser, loading2, googleError] =
     useSignInWithGoogle(auth);
   const [sendPasswordResetEmail, sending, resetError] =
     useSendPasswordResetEmail(auth);
+
   const [user] = useAuthState(auth);
 
 if(sending || loading2 || loading){
   <Loading></Loading>
 }
 
+// email and pass validation
   const handelEmailInput = (event) => {
     const emailRegex = /\S+@\S+\.\S+/;
     const validEmail = emailRegex.test(event.target.value);
@@ -64,6 +67,7 @@ if(sending || loading2 || loading){
     }
   };
 
+  // submit buttons
   const handelSubmit = (event) => {
     event.preventDefault();
     signInWithEmail(userInfo.email, userInfo.password);
@@ -75,6 +79,7 @@ if(sending || loading2 || loading){
     setErrors({ ...errors, others: "" });
   }
   
+  // pass reset button
   const resetPassword = async() => {
     const email = userInfo.email;
     if(email){
@@ -86,7 +91,7 @@ if(sending || loading2 || loading){
       }
     }
     
-  // };
+ 
   // hookError
   useEffect(() => {
     const error = hookError || googleError;
@@ -96,6 +101,7 @@ if(sending || loading2 || loading){
     }
   }, [hookError, googleError]);
 
+  //page navigation
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
